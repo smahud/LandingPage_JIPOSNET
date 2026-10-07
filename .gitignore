@@ -1,0 +1,21 @@
+# ── dependensi ──────────────────────────────
+/node_modules
+.pnp
+.pnp.js
+
+# ── build ───────────────────────────────────
+/.next/
+/out/
+/build/
+next-env.d.ts
+
+# ── log & lain-lain ─────────────────────────
+*.log
+.DS_Store
+*.pem
+Thumbs.db
+
+# ── environment ─────────────────────────────
+.env
+.env.*
+*.tsbuildinfo

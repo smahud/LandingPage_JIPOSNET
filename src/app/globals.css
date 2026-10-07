@@ -1,0 +1,409 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ── JIPOSNET Brand Palette ─────────────────────────── */
+  --color-jipo-navy: #0b1f3a;        /* deep navy — trust & technology   */
+  --color-jipo-navy-950: #060f1f;    /* darkest navy — footer/hero depth */
+  --color-jipo-navy-900: #081729;    /* dark navy panels                 */
+  --color-jipo-navy-800: #10294c;    /* elevated navy cards              */
+  --color-jipo-navy-700: #1a3763;    /* navy borders/hover               */
+  --color-jipo-blue: #0066ff;        /* electric blue — speed            */
+  --color-jipo-blue-600: #0052d4;    /* pressed electric blue            */
+  --color-jipo-cyan: #00d4ff;        /* cyan glow                        */
+  --color-jipo-green: #16a34a;       /* growth & community               */
+  --color-jipo-mist: #f4f7fb;        /* soft gray background             */
+  --color-jipo-slate: #4a5c74;       /* muted body text on light         */
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background-color: #0066ff;
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Cyan-glow heading treatment for dark sections */
+  .text-glow-cyan {
+    text-shadow:
+      0 0 18px rgba(0, 212, 255, 0.45),
+      0 0 46px rgba(0, 102, 255, 0.28);
+  }
+
+  /* Glowing primary button */
+  .btn-glow {
+    box-shadow:
+      0 0 0 0 rgba(0, 102, 255, 0.45),
+      0 10px 30px -8px rgba(0, 102, 255, 0.55);
+    transition:
+      box-shadow 0.35s ease,
+      transform 0.35s ease,
+      filter 0.35s ease;
+  }
+  .btn-glow:hover {
+    box-shadow:
+      0 0 0 1px rgba(0, 212, 255, 0.35),
+      0 0 28px 2px rgba(0, 102, 255, 0.65),
+      0 14px 44px -8px rgba(0, 212, 255, 0.5);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  .btn-glow-green {
+    box-shadow: 0 10px 30px -8px rgba(37, 211, 102, 0.55);
+    transition:
+      box-shadow 0.35s ease,
+      transform 0.35s ease,
+      filter 0.35s ease;
+  }
+  .btn-glow-green:hover {
+    box-shadow:
+      0 0 26px 2px rgba(37, 211, 102, 0.55),
+      0 14px 44px -8px rgba(37, 211, 102, 0.5);
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
+
+  /* Frosted glass panels */
+  .glass-dark {
+    background: rgba(11, 31, 58, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 212, 255, 0.16);
+  }
+  .glass-light {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(11, 31, 58, 0.08);
+  }
+
+  /* Subtle dot-grid texture for light sections */
+  .bg-dots {
+    background-image: radial-gradient(rgba(11, 31, 58, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  /* Dot grid for dark map */
+  .bg-dots-dark {
+    background-image: radial-gradient(rgba(0, 212, 255, 0.12) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* Blueprint grid for dark sections */
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+}
+
+/* ── Keyframe animations ─────────────────────────────────── */
+
+/* Animated WiFi arcs — expanding then fading */
+@keyframes wifi-wave {
+  0% {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+.animate-wifi-wave {
+  animation: wifi-wave 2.6s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+
+/* Animated WiFi arcs — each arc lights up in sequence */
+@keyframes wifi-arc {
+  0% {
+    opacity: 0.2;
+  }
+  12% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0.2;
+  }
+}
+.animate-wifi-arc {
+  animation: wifi-arc 2.4s ease-in-out infinite;
+}
+
+/* Coverage pulse rings on the map */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.65;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 3.2s cubic-bezier(0.16, 0.8, 0.36, 1) infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* SVG dash flow — data travelling along lines */
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+.animate-dash-flow {
+  animation: dash-flow 1.4s linear infinite;
+}
+
+/* Radar sweep rotation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 6s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Gentle floating for decorative cards */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.animate-float-y {
+  animation: float-y 7s ease-in-out infinite;
+}
+
+/* Soft breathing glow for orbs */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.12);
+  }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 8s ease-in-out infinite;
+}
+
+/* Scroll-down hint */
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(9px);
+    opacity: 0.45;
+  }
+}
+.animate-scroll-hint {
+  animation: scroll-hint 2.2s ease-in-out infinite;
+}
+
+/* Blinking live status dot */
+@keyframes blink-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+.animate-blink-dot {
+  animation: blink-dot 1.6s ease-in-out infinite;
+}
+
+/* Reduced motion: calm everything down */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-wifi-wave,
+  .animate-wifi-arc,
+  .animate-pulse-ring,
+  .animate-dash-flow,
+  .animate-spin-slow,
+  .animate-float-y,
+  .animate-glow-pulse,
+  .animate-scroll-hint,
+  .animate-blink-dot {
+    animation: none;
+  }
+}
+
+/* Custom scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #eef2f8;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0b1f3a, #0066ff);
+  border-radius: 8px;
+  border: 2px solid #eef2f8;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0066ff, #00d4ff);
+}

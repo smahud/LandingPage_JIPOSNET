@@ -1,0 +1,63 @@
+name: Deploy ke GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependensi
+        run: bun install --frozen-lockfile
+
+      # ── Build 1: situs untuk GitHub Pages (dengan sub-path) ──
+      - name: Build situs statis (GitHub Pages)
+        run: bun run build
+        env:
+          STATIC_EXPORT: "1"
+          BASE_PATH: "/LandingPage_JIPOSNET"
+
+      - name: Upload artifact GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+      # ── Build 2: situs untuk hosting sendiri (domain root, siap upload cPanel) ──
+      - name: Build situs statis (hosting sendiri)
+        run: bun run build
+        env:
+          STATIC_EXPORT: "1"
+
+      - name: Buat ZIP siap upload
+        run: cd out && zip -qr jiposnet-static-hosting.zip . && mv jiposnet-static-hosting.zip ..
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jiposnet-static-hosting
+          path: jiposnet-static-hosting.zip
+          retention-days: 90
+
+      - name: Deploy ke GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
