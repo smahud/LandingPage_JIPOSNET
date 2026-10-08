@@ -25,6 +25,16 @@ seksi kontak berbasis WhatsApp.
 
 Dibangun dengan **Next.js 16 · TypeScript · Tailwind CSS 4 · shadcn/ui · Framer Motion**.
 
+> 📦 **Dua versi tersedia — pilih sesuai kebutuhan hosting Anda:**
+>
+> | Versi | Lokasi | Untuk siapa |
+> |---|---|---|
+> | **Next.js** (utama) | root repo / `src/` | GitHub Pages, Vercel, Netlify, VPS — sudah live |
+> | **PHP murni** | [`php_version/`](php_version/) | shared hosting / cPanel biasa — tanpa Node.js sama sekali |
+>
+> Keduanya identik secara desain, animasi, dan interaksi (memakai CSS hasil build yang sama).
+> Panduan lengkap versi PHP: **[`php_version/README.md`](php_version/README.md)**
+
 > Semua tombol kontak langsung membuka WhatsApp **(+62 812-7457-3558)** dengan
 > pesan yang sudah terisi otomatis — tanpa perlu backend sama sekali.
 
@@ -57,14 +67,26 @@ lalu lihat hasilnya di **https://smahud.github.io/LandingPage_JIPOSNET/**
 > ZIP ini dibangun untuk domain utama / subdomain (root). Tidak perlu Node.js,
 > tidak perlu proses build di server — cukup upload & ekstrak.
 
-### ✅ Opsi C — Vercel / Netlify (gratis, ±1 menit)
+### ✅ Opsi C — Versi PHP untuk Shared Hosting / cPanel
+
+Punya hosting PHP biasa (cPanel) tanpa dukungan Node.js? **Gunakan versi PHP** —
+kode sumbernya ada di folder **[`php_version/`](php_version/)**:
+
+1. Buka tab **[Actions](https://github.com/smahud/LandingPage_JIPOSNET/actions)**
+   → run **php-version** terbaru → download artifact **`jiposnet-php-hosting`** (ZIP)
+2. Ekstrak seluruh isi ZIP ke `public_html` di hosting Anda
+3. Selesai — cukup PHP 7.4+ (bawaan semua hosting), tanpa database, tanpa build
+
+Detail lengkap (struktur file, cara edit konten, FAQ): **[`php_version/README.md`](php_version/README.md)**
+
+### ✅ Opsi D — Vercel / Netlify (gratis, ±1 menit)
 
 | Platform | Cara |
 |---|---|
 | **Vercel** | Buka [vercel.com/new](https://vercel.com/new) → import repo ini → **Deploy** (tanpa konfigurasi apa pun) |
 | **Netlify** | Buka [app.netlify.com](https://app.netlify.com) → *Add new site* → *Import an existing project* → pilih repo ini → **Deploy** |
 
-### ✅ Opsi D — VPS (nginx / Apache)
+### ✅ Opsi E — VPS (nginx / Apache)
 
 ```bash
 git clone https://github.com/smahud/LandingPage_JIPOSNET.git
@@ -125,20 +147,30 @@ bun run lint     # cek kualitas kode
 
 Setelah mengubah, cukup `git push` — situs online otomatis ter-update.
 
+> 💡 Untuk versi PHP, semua edit dilakukan langsung di file `php_version/`
+> (`includes/config.php` untuk kontak/alamat, `sections/*.php` untuk teks) —
+> tanpa proses build apa pun.
+
 ---
 
 ## 📁 Struktur Proyek
 
 ```
-├── .github/workflows/deploy.yml   # CI: build → deploy GitHub Pages + ZIP hosting
-├── public/images/                 # seluruh gambar (self-contained, tanpa CDN luar)
+├── .github/workflows/deploy.yml       # CI: build → deploy GitHub Pages + ZIP hosting statis
+├── .github/workflows/php-version.yml   # CI: validasi sintaks + ZIP versi PHP
+├── public/images/                      # seluruh gambar (self-contained, tanpa CDN luar)
+├── php_version/                        # 📦 VERSI PHP — shared hosting / cPanel
+│   ├── index.php                       # halaman utama
+│   ├── includes/config.php             # kontak, alamat, WhatsApp (EDIT DI SINI)
+│   ├── sections/                       # satu file per seksi halaman
+│   └── assets/                         # css, js, font, gambar (self-contained)
 └── src/
-    ├── app/                       # layout, halaman utama, gaya global, favicon
+    ├── app/                            # layout, halaman utama, gaya global, favicon
     ├── components/
-    │   ├── jiposnet/              # seluruh komponen landing page JIPOSNET
-    │   └── ui/                    # komponen shadcn/ui yang dipakai
-    ├── hooks/                     # use-toast
-    └── lib/                       # utilitas cn()
+    │   ├── jiposnet/                   # seluruh komponen landing page JIPOSNET
+    │   └── ui/                         # komponen shadcn/ui yang dipakai
+    ├── hooks/                          # use-toast
+    └── lib/                            # utilitas cn()
 ```
 
 ---

@@ -1,0 +1,48 @@
+name: php-version
+
+# Validasi & paket versi PHP (php_version/) menjadi ZIP siap upload ke
+# shared hosting / cPanel — terpisah dari deploy GitHub Pages versi Next.js.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "php_version/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Validasi sintaks & buat ZIP hosting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+
+      - name: Validasi sintaks semua file PHP
+        run: |
+          set -e
+          find php_version -name "*.php" -print0 | xargs -0 -n1 php -l
+          echo "✔ Semua file PHP valid"
+
+      - name: Paket ZIP siap upload (jiposnet-php-hosting)
+        run: |
+          cd php_version
+          zip -r ../jiposnet-php-hosting.zip . -x ".git*" "README.md"
+          cd ..
+          unzip -l jiposnet-php-hosting.zip | head -20
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jiposnet-php-hosting
+          path: jiposnet-php-hosting.zip
+          retention-days: 90

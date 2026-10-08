@@ -1,0 +1,161 @@
+/* ===========================================================================
+   JIPOSNET — extras.css (khusus versi PHP)
+   ---------------------------------------------------------------------------
+   app.css berisi seluruh utility Tailwind hasil build (identik dengan versi
+   Next.js). File ini hanya menambahkan perilaku yang di versi Next.js
+   ditangani React/Framer Motion/Radix, yaitu:
+
+     1. Variabel font (di Next.js disuntik next/font)
+     2. Status navbar (transparan → kaca saat scroll + warna tautan)
+     3. Sistem reveal-on-scroll (pengganti framer-motion)
+     4. Drawer menu seluler (pengganti Radix Sheet)
+   =========================================================================== */
+
+/* ── 1. Variabel font ────────────────────────────────────────────────────── */
+:root {
+  --font-inter: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-space-grotesk: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --ease-jipo: cubic-bezier(0.21, 0.47, 0.32, 0.98);
+}
+
+/* ── 2. Navbar ───────────────────────────────────────────────────────────── */
+
+/* Wordmark logo: putih di atas hero, navy saat navbar kaca */
+.logo-word { color: #ffffff; }
+.logo-sub  { color: rgba(255, 255, 255, 0.6); }
+.site-header[data-scrolled] .logo-word { color: #0b1f3a; }
+.site-header[data-scrolled] .logo-sub  { color: #4a5c74; }
+
+/* Latar navbar: transparan di puncak hero → panel kaca setelah scroll 24px */
+.site-header[data-scrolled] {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(11, 31, 58, 0.08);
+  box-shadow: 0 8px 40px -12px rgba(11, 31, 58, 0.25);
+}
+
+/* Tautan navigasi desktop */
+.nav-link { color: rgba(255, 255, 255, 0.8); }
+.nav-link:hover { color: #ffffff; }
+.nav-link.is-active { color: #00d4ff; }
+
+.site-header[data-scrolled] .nav-link { color: rgba(11, 31, 58, 0.75); }
+.site-header[data-scrolled] .nav-link:hover { color: #0066ff; }
+.site-header[data-scrolled] .nav-link.is-active { color: #0066ff; }
+
+/* Garis bawah tautan aktif */
+.nav-underline {
+  transform: scaleX(0);
+  opacity: 0;
+}
+.nav-link.is-active .nav-underline {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* Nomor telepon di navbar */
+.nav-phone { color: rgba(255, 255, 255, 0.85); }
+.nav-phone:hover { color: #00d4ff; }
+.site-header[data-scrolled] .nav-phone { color: #0b1f3a; }
+.site-header[data-scrolled] .nav-phone:hover { color: #0066ff; }
+
+/* Tombol menu seluler */
+.nav-burger { color: #ffffff; }
+.nav-burger:hover { background: rgba(255, 255, 255, 0.1); }
+.site-header[data-scrolled] .nav-burger { color: #0b1f3a; }
+.site-header[data-scrolled] .nav-burger:hover { background: rgba(11, 31, 58, 0.05); }
+
+/* ── 3. Reveal on scroll (pengganti framer-motion) ───────────────────────── */
+
+/* Elemen tunggal dengan delay via --rv-delay dan jarak via --rv-y */
+.rv {
+  opacity: 0;
+  transform: translateY(var(--rv-y, 28px));
+  transition:
+    opacity 0.75s var(--ease-jipo),
+    transform 0.75s var(--ease-jipo);
+  transition-delay: var(--rv-delay, 0s);
+  will-change: opacity, transform;
+}
+.rv.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Item di dalam grup ber-stagger — delay urutan diatur main.js */
+.rvi {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.65s var(--ease-jipo),
+    transform 0.65s var(--ease-jipo);
+  will-change: opacity, transform;
+}
+.rvi.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── 4. Drawer menu seluler (pengganti Radix Sheet) ──────────────────────── */
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  visibility: hidden;
+  pointer-events: none;
+}
+.drawer.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.drawer-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 15, 31, 0.6);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.drawer.is-open .drawer-overlay { opacity: 1; }
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 2rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: -24px 0 60px -24px rgba(6, 15, 31, 0.6);
+}
+.drawer.is-open .drawer-panel { transform: none; }
+
+/* Kunci scroll body saat drawer terbuka */
+body.drawer-open { overflow: hidden; }
+
+/* ── Aksesibilitas: fokus keyboard ───────────────────────────────────────── */
+.nav-link:focus-visible,
+.nav-burger:focus-visible,
+.drawer-panel a:focus-visible,
+.drawer-panel button:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion: matikan semua animasi buatan ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rvi {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .drawer,
+  .drawer-overlay,
+  .drawer-panel {
+    transition: none;
+  }
+}

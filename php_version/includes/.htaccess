@@ -1,0 +1,3 @@
+# Melindungi folder includes dari akses langsung via browser.
+# (Template di-include oleh PHP, tidak pernah diakses langsung.)
+Require all denied
